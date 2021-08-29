@@ -19,6 +19,16 @@ class SpicesController < ApplicationController
         render json: spice, status: :created
     end
 
+    def update
+        spice = Spice.find_by(id: params[:id])
+        if spice
+            spice.update(spice_params)
+            render json: spice
+        else
+            render json: {error: "spice not found" }, status: :not_found
+        end
+    end
+
     def spice_params
         params.permit(:title, :image, :description, :notes, :rating)
     end
